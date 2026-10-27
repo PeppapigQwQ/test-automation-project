@@ -1,0 +1,33 @@
+name: Run pytest tests
+
+# 什么时候触发流水线：push代码到main分支、提交PR到main分支
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 任务
+jobs:
+  test:
+    runs-on: ubuntu-latest   # GitHub给你分配一台Ubuntu虚拟机跑任务
+    steps:
+      # 步骤1：把仓库代码拉取到这台虚拟机
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 步骤2：安装Python环境
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # 步骤3：安装依赖pytest
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      # 步骤4：执行pytest运行测试用例
+      - name: Run pytest
+        run: pytest test_calculator.py -v
