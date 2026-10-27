@@ -4,4 +4,4 @@ def test_case1():
 
 def test_case2():
     result =3 +5
-    assert result == 1
+    assert result == 8
